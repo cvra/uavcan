@@ -18,8 +18,18 @@
 # error "Unknown OS"
 #endif
 
+#if UAVCAN_STM32_CHIBIOS
+# if defined(STM32F3XX)
+#  define CAN1_RX0_IRQn         CAN_RX0_IRQn
+#  define CAN1_RX1_IRQn         CAN_RX1_IRQn
+#  define CAN1_TX_IRQn          CAN_TX_IRQn
+#  define RCC_APB1ENR_CAN1EN    RCC_APB1ENR_CANEN
+#  define RCC_APB1RSTR_CAN1RST  RCC_APB1RSTR_CANRST
+# endif
+#endif
+
 #if !UAVCAN_STM32_NUTTX
-# if !(defined(STM32F10X_CL) || defined(STM32F2XX) || defined(STM32F4XX))
+# if !(defined(STM32F10X_CL) || defined(STM32F2XX) || defined(STM32F3XX) || defined(STM32F4XX))
 // IRQ numbers
 #  define CAN1_RX0_IRQn USB_LP_CAN1_RX0_IRQn
 #  define CAN1_TX_IRQn USB_HP_CAN1_TX_IRQn
